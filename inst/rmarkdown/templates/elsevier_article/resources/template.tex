@@ -14,8 +14,6 @@ $endif$
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
-\bibliographystyle{elsarticle-harv}
-\biboptions{sort&compress} % For natbib
 \usepackage{graphicx}
 \usepackage{booktabs} % book-quality tables
 %%%%%%%%%%%%%%%% end my additions to header
@@ -60,12 +58,8 @@ $endif$
 $if(natbib)$
 \usepackage{natbib}
 \bibliographystyle{plainnat}
-$endif$
-$if(biblatex)$
-\usepackage{biblatex}
-$if(biblio-files)$
-\bibliography{$biblio-files$}
-$endif$
+$else$
+\bibliographystyle{elsarticle-harv}
 $endif$
 $if(listings)$
 \usepackage{listings}
@@ -105,7 +99,7 @@ $endif$
             bookmarks=true,
             pdfauthor={$author-meta$},
             pdftitle={$title-meta$},
-            colorlinks=true,
+            colorlinks=$if(colorlinks)$true$else$false$endif$,
             urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
             linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
             pdfborder={0 0 0}}
@@ -170,7 +164,7 @@ $preamble$
 $body$
 
 $if(natbib)$
-$if(biblio-files)$
+$if(bibliography)$
 $if(biblio-title)$
 $if(book-class)$
 \renewcommand\bibname{$biblio-title$}
@@ -178,14 +172,11 @@ $else$
 \renewcommand\refname{$biblio-title$}
 $endif$
 $endif$
-\bibliography{$biblio-files$}
+\bibliography{$bibliography$}
 
 $endif$
 $endif$
-$if(biblatex)$
-\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
 
-$endif$
 $for(include-after)$
 $include-after$
 
